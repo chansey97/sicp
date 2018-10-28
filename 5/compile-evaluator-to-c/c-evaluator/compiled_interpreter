@@ -1,0 +1,5131 @@
+  val = make_compiled_procedure(label(&&entry1), env);
+  goto after_lambda2;
+entry1:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), cons(sym("env"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("gc-if-necessary"), env);
+  argl = null();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch3;
+compiled_branch4:
+  cont = label(&&after_call5);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch3:
+  val = apply_primitive_procedure(proc, argl);
+after_call5:
+  env = pop();
+  cont = pop();
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("self-evaluating?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch9;
+compiled_branch10:
+  cont = label(&&after_call11);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch9:
+  val = apply_primitive_procedure(proc, argl);
+after_call11:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch7;
+true_branch6:
+  val = lookup_variable_value(sym("exp"), env);
+  goto *value_to_label(cont);
+false_branch7:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("variable?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch15;
+compiled_branch16:
+  cont = label(&&after_call17);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch15:
+  val = apply_primitive_procedure(proc, argl);
+after_call17:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch13;
+true_branch12:
+  proc = lookup_variable_value(sym("lookup-variable-value"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch18;
+compiled_branch19:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch18:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call20:
+false_branch13:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("quoted?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch24;
+compiled_branch25:
+  cont = label(&&after_call26);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch24:
+  val = apply_primitive_procedure(proc, argl);
+after_call26:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch22;
+true_branch21:
+  proc = lookup_variable_value(sym("text-of-quotation"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch27;
+compiled_branch28:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch27:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call29:
+false_branch22:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("assignment?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch33;
+compiled_branch34:
+  cont = label(&&after_call35);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch33:
+  val = apply_primitive_procedure(proc, argl);
+after_call35:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch31;
+true_branch30:
+  proc = lookup_variable_value(sym("eval-assignment"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch36;
+compiled_branch37:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch36:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call38:
+false_branch31:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("definition?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch42;
+compiled_branch43:
+  cont = label(&&after_call44);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch42:
+  val = apply_primitive_procedure(proc, argl);
+after_call44:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch40;
+true_branch39:
+  proc = lookup_variable_value(sym("eval-definition"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch45;
+compiled_branch46:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch45:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call47:
+false_branch40:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("if?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch51;
+compiled_branch52:
+  cont = label(&&after_call53);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch51:
+  val = apply_primitive_procedure(proc, argl);
+after_call53:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch49;
+true_branch48:
+  proc = lookup_variable_value(sym("eval-if"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch54;
+compiled_branch55:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch54:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call56:
+false_branch49:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("lambda?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch60;
+compiled_branch61:
+  cont = label(&&after_call62);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch60:
+  val = apply_primitive_procedure(proc, argl);
+after_call62:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch58;
+true_branch57:
+  proc = lookup_variable_value(sym("make-procedure"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("lambda-body"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch66;
+compiled_branch67:
+  cont = label(&&after_call68);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch66:
+  val = apply_primitive_procedure(proc, argl);
+after_call68:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("lambda-parameters"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch63;
+compiled_branch64:
+  cont = label(&&after_call65);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch63:
+  val = apply_primitive_procedure(proc, argl);
+after_call65:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch69;
+compiled_branch70:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch69:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call71:
+false_branch58:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("begin?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch75;
+compiled_branch76:
+  cont = label(&&after_call77);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch75:
+  val = apply_primitive_procedure(proc, argl);
+after_call77:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch73;
+true_branch72:
+  proc = lookup_variable_value(sym("eval-sequence"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("begin-actions"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch78;
+compiled_branch79:
+  cont = label(&&after_call80);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch78:
+  val = apply_primitive_procedure(proc, argl);
+after_call80:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch81;
+compiled_branch82:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch81:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call83:
+false_branch73:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("cond?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch87;
+compiled_branch88:
+  cont = label(&&after_call89);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch87:
+  val = apply_primitive_procedure(proc, argl);
+after_call89:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch85;
+true_branch84:
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("cond->if"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch90;
+compiled_branch91:
+  cont = label(&&after_call92);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch90:
+  val = apply_primitive_procedure(proc, argl);
+after_call92:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch93;
+compiled_branch94:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch93:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call95:
+false_branch85:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("application?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch99;
+compiled_branch100:
+  cont = label(&&after_call101);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch99:
+  val = apply_primitive_procedure(proc, argl);
+after_call101:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch97;
+true_branch96:
+  proc = lookup_variable_value(sym("apply-procedure"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("list-of-values"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("operands"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch108;
+compiled_branch109:
+  cont = label(&&after_call110);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch108:
+  val = apply_primitive_procedure(proc, argl);
+after_call110:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch111;
+compiled_branch112:
+  cont = label(&&after_call113);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch111:
+  val = apply_primitive_procedure(proc, argl);
+after_call113:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("operator"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch102;
+compiled_branch103:
+  cont = label(&&after_call104);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch102:
+  val = apply_primitive_procedure(proc, argl);
+after_call104:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch105;
+compiled_branch106:
+  cont = label(&&after_call107);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch105:
+  val = apply_primitive_procedure(proc, argl);
+after_call107:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch114;
+compiled_branch115:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch114:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call116:
+false_branch97:
+  proc = lookup_variable_value(sym("error"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  val = str("Unknown expression type - EVALUATE");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch117;
+compiled_branch118:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch117:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call119:
+after_if98:
+after_if86:
+after_if74:
+after_if59:
+after_if50:
+after_if41:
+after_if32:
+after_if23:
+after_if14:
+after_if8:
+after_lambda2:
+  define_variable_bang(sym("evaluate"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry120), env);
+  goto after_lambda121;
+entry120:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("procedure"), cons(sym("arguments"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("primitive-procedure?"), env);
+  val = lookup_variable_value(sym("procedure"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch125;
+compiled_branch126:
+  cont = label(&&after_call127);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch125:
+  val = apply_primitive_procedure(proc, argl);
+after_call127:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch123;
+true_branch122:
+  proc = lookup_variable_value(sym("apply-primitive-procedure"), env);
+  val = lookup_variable_value(sym("arguments"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("procedure"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch128;
+compiled_branch129:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch128:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call130:
+false_branch123:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("compound-procedure?"), env);
+  val = lookup_variable_value(sym("procedure"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch134;
+compiled_branch135:
+  cont = label(&&after_call136);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch134:
+  val = apply_primitive_procedure(proc, argl);
+after_call136:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch132;
+true_branch131:
+  proc = lookup_variable_value(sym("eval-sequence"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("extend-environment"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("procedure-environment"), env);
+  val = lookup_variable_value(sym("procedure"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch143;
+compiled_branch144:
+  cont = label(&&after_call145);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch143:
+  val = apply_primitive_procedure(proc, argl);
+after_call145:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("arguments"), env);
+  argl = cons(val, argl);
+  push(argl);
+  proc = lookup_variable_value(sym("procedure-parameters"), env);
+  val = lookup_variable_value(sym("procedure"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch140;
+compiled_branch141:
+  cont = label(&&after_call142);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch140:
+  val = apply_primitive_procedure(proc, argl);
+after_call142:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch146;
+compiled_branch147:
+  cont = label(&&after_call148);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch146:
+  val = apply_primitive_procedure(proc, argl);
+after_call148:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("procedure-body"), env);
+  val = lookup_variable_value(sym("procedure"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch137;
+compiled_branch138:
+  cont = label(&&after_call139);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch137:
+  val = apply_primitive_procedure(proc, argl);
+after_call139:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch149;
+compiled_branch150:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch149:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call151:
+false_branch132:
+  proc = lookup_variable_value(sym("error"), env);
+  val = lookup_variable_value(sym("procedure"), env);
+  argl = list(val);
+  val = str("Unknown procedure type - APPLY-PROCEDURE");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch152;
+compiled_branch153:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch152:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call154:
+after_if133:
+after_if124:
+after_lambda121:
+  define_variable_bang(sym("apply-procedure"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry155), env);
+  goto after_lambda156;
+entry155:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exps"), cons(sym("env"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("no-operands?"), env);
+  val = lookup_variable_value(sym("exps"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch160;
+compiled_branch161:
+  cont = label(&&after_call162);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch160:
+  val = apply_primitive_procedure(proc, argl);
+after_call162:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch158;
+true_branch157:
+  val = null();
+  goto *value_to_label(cont);
+false_branch158:
+  proc = lookup_variable_value(sym("cons"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("list-of-values"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("rest-operands"), env);
+  val = lookup_variable_value(sym("exps"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch169;
+compiled_branch170:
+  cont = label(&&after_call171);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch169:
+  val = apply_primitive_procedure(proc, argl);
+after_call171:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch172;
+compiled_branch173:
+  cont = label(&&after_call174);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch172:
+  val = apply_primitive_procedure(proc, argl);
+after_call174:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("first-operand"), env);
+  val = lookup_variable_value(sym("exps"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch163;
+compiled_branch164:
+  cont = label(&&after_call165);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch163:
+  val = apply_primitive_procedure(proc, argl);
+after_call165:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch166;
+compiled_branch167:
+  cont = label(&&after_call168);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch166:
+  val = apply_primitive_procedure(proc, argl);
+after_call168:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch175;
+compiled_branch176:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch175:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call177:
+after_if159:
+after_lambda156:
+  define_variable_bang(sym("list-of-values"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry178), env);
+  goto after_lambda179;
+entry178:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), cons(sym("env"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("true?"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("if-predicate"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch183;
+compiled_branch184:
+  cont = label(&&after_call185);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch183:
+  val = apply_primitive_procedure(proc, argl);
+after_call185:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch186;
+compiled_branch187:
+  cont = label(&&after_call188);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch186:
+  val = apply_primitive_procedure(proc, argl);
+after_call188:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch189;
+compiled_branch190:
+  cont = label(&&after_call191);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch189:
+  val = apply_primitive_procedure(proc, argl);
+after_call191:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch181;
+true_branch180:
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("if-consequent"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch192;
+compiled_branch193:
+  cont = label(&&after_call194);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch192:
+  val = apply_primitive_procedure(proc, argl);
+after_call194:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch195;
+compiled_branch196:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch195:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call197:
+false_branch181:
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("if-alternative"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch198;
+compiled_branch199:
+  cont = label(&&after_call200);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch198:
+  val = apply_primitive_procedure(proc, argl);
+after_call200:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch201;
+compiled_branch202:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch201:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call203:
+after_if182:
+after_lambda179:
+  define_variable_bang(sym("eval-if"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry204), env);
+  goto after_lambda205;
+entry204:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exps"), cons(sym("env"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("last-exp?"), env);
+  val = lookup_variable_value(sym("exps"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch209;
+compiled_branch210:
+  cont = label(&&after_call211);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch209:
+  val = apply_primitive_procedure(proc, argl);
+after_call211:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch207;
+true_branch206:
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("first-exp"), env);
+  val = lookup_variable_value(sym("exps"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch212;
+compiled_branch213:
+  cont = label(&&after_call214);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch212:
+  val = apply_primitive_procedure(proc, argl);
+after_call214:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch215;
+compiled_branch216:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch215:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call217:
+false_branch207:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("first-exp"), env);
+  val = lookup_variable_value(sym("exps"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch218;
+compiled_branch219:
+  cont = label(&&after_call220);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch218:
+  val = apply_primitive_procedure(proc, argl);
+after_call220:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch221;
+compiled_branch222:
+  cont = label(&&after_call223);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch221:
+  val = apply_primitive_procedure(proc, argl);
+after_call223:
+  env = pop();
+  cont = pop();
+  proc = lookup_variable_value(sym("eval-sequence"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("rest-exps"), env);
+  val = lookup_variable_value(sym("exps"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch224;
+compiled_branch225:
+  cont = label(&&after_call226);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch224:
+  val = apply_primitive_procedure(proc, argl);
+after_call226:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch227;
+compiled_branch228:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch227:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call229:
+after_if208:
+after_lambda205:
+  define_variable_bang(sym("eval-sequence"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry230), env);
+  goto after_lambda231;
+entry230:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), cons(sym("env"), null())), argl, env);
+  push(cont);
+  proc = lookup_variable_value(sym("set-variable-value!"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("assignment-value"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch235;
+compiled_branch236:
+  cont = label(&&after_call237);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch235:
+  val = apply_primitive_procedure(proc, argl);
+after_call237:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch238;
+compiled_branch239:
+  cont = label(&&after_call240);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch238:
+  val = apply_primitive_procedure(proc, argl);
+after_call240:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("assignment-variable"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch232;
+compiled_branch233:
+  cont = label(&&after_call234);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch232:
+  val = apply_primitive_procedure(proc, argl);
+after_call234:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch241;
+compiled_branch242:
+  cont = label(&&after_call243);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch241:
+  val = apply_primitive_procedure(proc, argl);
+after_call243:
+  cont = pop();
+  val = sym("ok");
+  goto *value_to_label(cont);
+after_lambda231:
+  define_variable_bang(sym("eval-assignment"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry244), env);
+  goto after_lambda245;
+entry244:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), cons(sym("env"), null())), argl, env);
+  push(cont);
+  proc = lookup_variable_value(sym("define-variable!"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("evaluate"), env);
+  push(proc);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("definition-value"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch249;
+compiled_branch250:
+  cont = label(&&after_call251);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch249:
+  val = apply_primitive_procedure(proc, argl);
+after_call251:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch252;
+compiled_branch253:
+  cont = label(&&after_call254);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch252:
+  val = apply_primitive_procedure(proc, argl);
+after_call254:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("definition-variable"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch246;
+compiled_branch247:
+  cont = label(&&after_call248);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch246:
+  val = apply_primitive_procedure(proc, argl);
+after_call248:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch255;
+compiled_branch256:
+  cont = label(&&after_call257);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch255:
+  val = apply_primitive_procedure(proc, argl);
+after_call257:
+  cont = pop();
+  val = sym("ok");
+  goto *value_to_label(cont);
+after_lambda245:
+  define_variable_bang(sym("eval-definition"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry258), env);
+  goto after_lambda259;
+entry258:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("number?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch263;
+compiled_branch264:
+  cont = label(&&after_call265);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch263:
+  val = apply_primitive_procedure(proc, argl);
+after_call265:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch261;
+true_branch260:
+  val = lookup_variable_value(sym("true"), env);
+  goto *value_to_label(cont);
+false_branch261:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("string?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch269;
+compiled_branch270:
+  cont = label(&&after_call271);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch269:
+  val = apply_primitive_procedure(proc, argl);
+after_call271:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch267;
+true_branch266:
+  val = lookup_variable_value(sym("true"), env);
+  goto *value_to_label(cont);
+false_branch267:
+  val = lookup_variable_value(sym("false"), env);
+  goto *value_to_label(cont);
+after_if268:
+after_if262:
+after_lambda259:
+  define_variable_bang(sym("self-evaluating?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry272), env);
+  goto after_lambda273;
+entry272:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("symbol?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch274;
+compiled_branch275:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch274:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call276:
+after_lambda273:
+  define_variable_bang(sym("variable?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry277), env);
+  goto after_lambda278;
+entry277:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("quote");
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch279;
+compiled_branch280:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch279:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call281:
+after_lambda278:
+  define_variable_bang(sym("quoted?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry282), env);
+  goto after_lambda283;
+entry282:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch284;
+compiled_branch285:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch284:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call286:
+after_lambda283:
+  define_variable_bang(sym("text-of-quotation"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry287), env);
+  goto after_lambda288;
+entry287:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), cons(sym("tag"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("pair?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch292;
+compiled_branch293:
+  cont = label(&&after_call294);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch292:
+  val = apply_primitive_procedure(proc, argl);
+after_call294:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch290;
+true_branch289:
+  proc = lookup_variable_value(sym("eq?"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("tag"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch295;
+compiled_branch296:
+  cont = label(&&after_call297);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch295:
+  val = apply_primitive_procedure(proc, argl);
+after_call297:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch298;
+compiled_branch299:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch298:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call300:
+false_branch290:
+  val = lookup_variable_value(sym("false"), env);
+  goto *value_to_label(cont);
+after_if291:
+after_lambda288:
+  define_variable_bang(sym("tagged-list?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry301), env);
+  goto after_lambda302;
+entry301:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("set!");
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch303;
+compiled_branch304:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch303:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call305:
+after_lambda302:
+  define_variable_bang(sym("assignment?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry306), env);
+  goto after_lambda307;
+entry306:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch308;
+compiled_branch309:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch308:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call310:
+after_lambda307:
+  define_variable_bang(sym("assignment-variable"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry311), env);
+  goto after_lambda312;
+entry311:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("caddr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch313;
+compiled_branch314:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch313:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call315:
+after_lambda312:
+  define_variable_bang(sym("assignment-value"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry316), env);
+  goto after_lambda317;
+entry316:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("define");
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch318;
+compiled_branch319:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch318:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call320:
+after_lambda317:
+  define_variable_bang(sym("definition?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry321), env);
+  goto after_lambda322;
+entry321:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("symbol?"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch326;
+compiled_branch327:
+  cont = label(&&after_call328);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch326:
+  val = apply_primitive_procedure(proc, argl);
+after_call328:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch329;
+compiled_branch330:
+  cont = label(&&after_call331);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch329:
+  val = apply_primitive_procedure(proc, argl);
+after_call331:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch324;
+true_branch323:
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch332;
+compiled_branch333:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch332:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call334:
+false_branch324:
+  proc = lookup_variable_value(sym("caadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch335;
+compiled_branch336:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch335:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call337:
+after_if325:
+after_lambda322:
+  define_variable_bang(sym("definition-variable"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry338), env);
+  goto after_lambda339;
+entry338:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("symbol?"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch343;
+compiled_branch344:
+  cont = label(&&after_call345);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch343:
+  val = apply_primitive_procedure(proc, argl);
+after_call345:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch346;
+compiled_branch347:
+  cont = label(&&after_call348);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch346:
+  val = apply_primitive_procedure(proc, argl);
+after_call348:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch341;
+true_branch340:
+  proc = lookup_variable_value(sym("caddr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch349;
+compiled_branch350:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch349:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call351:
+false_branch341:
+  proc = lookup_variable_value(sym("make-lambda"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cddr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch355;
+compiled_branch356:
+  cont = label(&&after_call357);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch355:
+  val = apply_primitive_procedure(proc, argl);
+after_call357:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("cdadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch352;
+compiled_branch353:
+  cont = label(&&after_call354);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch352:
+  val = apply_primitive_procedure(proc, argl);
+after_call354:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch358;
+compiled_branch359:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch358:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call360:
+after_if342:
+after_lambda339:
+  define_variable_bang(sym("definition-value"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry361), env);
+  goto after_lambda362;
+entry361:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("lambda");
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch363;
+compiled_branch364:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch363:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call365:
+after_lambda362:
+  define_variable_bang(sym("lambda?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry366), env);
+  goto after_lambda367;
+entry366:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch368;
+compiled_branch369:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch368:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call370:
+after_lambda367:
+  define_variable_bang(sym("lambda-parameters"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry371), env);
+  goto after_lambda372;
+entry371:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("cddr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch373;
+compiled_branch374:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch373:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call375:
+after_lambda372:
+  define_variable_bang(sym("lambda-body"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry376), env);
+  goto after_lambda377;
+entry376:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("parameters"), cons(sym("body"), null())), argl, env);
+  proc = lookup_variable_value(sym("cons"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cons"), env);
+  val = lookup_variable_value(sym("body"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("parameters"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch378;
+compiled_branch379:
+  cont = label(&&after_call380);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch378:
+  val = apply_primitive_procedure(proc, argl);
+after_call380:
+  argl = list(val);
+  val = sym("lambda");
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch381;
+compiled_branch382:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch381:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call383:
+after_lambda377:
+  define_variable_bang(sym("make-lambda"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry384), env);
+  goto after_lambda385;
+entry384:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("if");
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch386;
+compiled_branch387:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch386:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call388:
+after_lambda385:
+  define_variable_bang(sym("if?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry389), env);
+  goto after_lambda390;
+entry389:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch391;
+compiled_branch392:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch391:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call393:
+after_lambda390:
+  define_variable_bang(sym("if-predicate"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry394), env);
+  goto after_lambda395;
+entry394:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("caddr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch396;
+compiled_branch397:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch396:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call398:
+after_lambda395:
+  define_variable_bang(sym("if-consequent"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry399), env);
+  goto after_lambda400;
+entry399:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("not"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("null?"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cdddr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch404;
+compiled_branch405:
+  cont = label(&&after_call406);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch404:
+  val = apply_primitive_procedure(proc, argl);
+after_call406:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch407;
+compiled_branch408:
+  cont = label(&&after_call409);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch407:
+  val = apply_primitive_procedure(proc, argl);
+after_call409:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch410;
+compiled_branch411:
+  cont = label(&&after_call412);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch410:
+  val = apply_primitive_procedure(proc, argl);
+after_call412:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch402;
+true_branch401:
+  proc = lookup_variable_value(sym("cadddr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch413;
+compiled_branch414:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch413:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call415:
+false_branch402:
+  val = sym("false");
+  goto *value_to_label(cont);
+after_if403:
+after_lambda400:
+  define_variable_bang(sym("if-alternative"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry416), env);
+  goto after_lambda417;
+entry416:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("predicate"), cons(sym("consequent"), cons(sym("alternative"), null()))), argl, env);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("alternative"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("consequent"), env);
+  argl = cons(val, argl);
+  val = lookup_variable_value(sym("predicate"), env);
+  argl = cons(val, argl);
+  val = sym("if");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch418;
+compiled_branch419:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch418:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call420:
+after_lambda417:
+  define_variable_bang(sym("make-if"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry421), env);
+  goto after_lambda422;
+entry421:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("begin");
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch423;
+compiled_branch424:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch423:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call425:
+after_lambda422:
+  define_variable_bang(sym("begin?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry426), env);
+  goto after_lambda427;
+entry426:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch428;
+compiled_branch429:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch428:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call430:
+after_lambda427:
+  define_variable_bang(sym("begin-actions"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry431), env);
+  goto after_lambda432;
+entry431:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("seq"), null()), argl, env);
+  proc = lookup_variable_value(sym("null?"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("seq"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch433;
+compiled_branch434:
+  cont = label(&&after_call435);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch433:
+  val = apply_primitive_procedure(proc, argl);
+after_call435:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch436;
+compiled_branch437:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch436:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call438:
+after_lambda432:
+  define_variable_bang(sym("last-exp?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry439), env);
+  goto after_lambda440;
+entry439:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("seq"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("seq"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch441;
+compiled_branch442:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch441:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call443:
+after_lambda440:
+  define_variable_bang(sym("first-exp"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry444), env);
+  goto after_lambda445;
+entry444:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("seq"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("seq"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch446;
+compiled_branch447:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch446:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call448:
+after_lambda445:
+  define_variable_bang(sym("rest-exps"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry449), env);
+  goto after_lambda450;
+entry449:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("seq"), null()), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("seq"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch454;
+compiled_branch455:
+  cont = label(&&after_call456);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch454:
+  val = apply_primitive_procedure(proc, argl);
+after_call456:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch452;
+true_branch451:
+  val = lookup_variable_value(sym("seq"), env);
+  goto *value_to_label(cont);
+false_branch452:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("last-exp?"), env);
+  val = lookup_variable_value(sym("seq"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch460;
+compiled_branch461:
+  cont = label(&&after_call462);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch460:
+  val = apply_primitive_procedure(proc, argl);
+after_call462:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch458;
+true_branch457:
+  proc = lookup_variable_value(sym("first-exp"), env);
+  val = lookup_variable_value(sym("seq"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch463;
+compiled_branch464:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch463:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call465:
+false_branch458:
+  proc = lookup_variable_value(sym("make-begin"), env);
+  val = lookup_variable_value(sym("seq"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch466;
+compiled_branch467:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch466:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call468:
+after_if459:
+after_if453:
+after_lambda450:
+  define_variable_bang(sym("sequence->exp"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry469), env);
+  goto after_lambda470;
+entry469:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("seq"), null()), argl, env);
+  proc = lookup_variable_value(sym("cons"), env);
+  val = lookup_variable_value(sym("seq"), env);
+  argl = list(val);
+  val = sym("begin");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch471;
+compiled_branch472:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch471:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call473:
+after_lambda470:
+  define_variable_bang(sym("make-begin"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry474), env);
+  goto after_lambda475;
+entry474:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("pair?"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch476;
+compiled_branch477:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch476:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call478:
+after_lambda475:
+  define_variable_bang(sym("application?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry479), env);
+  goto after_lambda480;
+entry479:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch481;
+compiled_branch482:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch481:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call483:
+after_lambda480:
+  define_variable_bang(sym("operator"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry484), env);
+  goto after_lambda485;
+entry484:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch486;
+compiled_branch487:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch486:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call488:
+after_lambda485:
+  define_variable_bang(sym("operands"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry489), env);
+  goto after_lambda490;
+entry489:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("ops"), null()), argl, env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("ops"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch491;
+compiled_branch492:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch491:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call493:
+after_lambda490:
+  define_variable_bang(sym("no-operands?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry494), env);
+  goto after_lambda495;
+entry494:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("ops"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("ops"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch496;
+compiled_branch497:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch496:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call498:
+after_lambda495:
+  define_variable_bang(sym("first-operand"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry499), env);
+  goto after_lambda500;
+entry499:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("ops"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("ops"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch501;
+compiled_branch502:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch501:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call503:
+after_lambda500:
+  define_variable_bang(sym("rest-operands"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry504), env);
+  goto after_lambda505;
+entry504:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("cond");
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch506;
+compiled_branch507:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch506:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call508:
+after_lambda505:
+  define_variable_bang(sym("cond?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry509), env);
+  goto after_lambda510;
+entry509:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch511;
+compiled_branch512:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch511:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call513:
+after_lambda510:
+  define_variable_bang(sym("cond-clauses"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry514), env);
+  goto after_lambda515;
+entry514:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("clause"), null()), argl, env);
+  proc = lookup_variable_value(sym("eq?"), env);
+  push(cont);
+  push(proc);
+  val = sym("else");
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("cond-predicate"), env);
+  val = lookup_variable_value(sym("clause"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch516;
+compiled_branch517:
+  cont = label(&&after_call518);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch516:
+  val = apply_primitive_procedure(proc, argl);
+after_call518:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch519;
+compiled_branch520:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch519:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call521:
+after_lambda515:
+  define_variable_bang(sym("cond-else-clause?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry522), env);
+  goto after_lambda523;
+entry522:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("clause"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("clause"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch524;
+compiled_branch525:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch524:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call526:
+after_lambda523:
+  define_variable_bang(sym("cond-predicate"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry527), env);
+  goto after_lambda528;
+entry527:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("clause"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("clause"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch529;
+compiled_branch530:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch529:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call531:
+after_lambda528:
+  define_variable_bang(sym("cond-actions"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry532), env);
+  goto after_lambda533;
+entry532:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("expand-clauses"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cond-clauses"), env);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch534;
+compiled_branch535:
+  cont = label(&&after_call536);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch534:
+  val = apply_primitive_procedure(proc, argl);
+after_call536:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch537;
+compiled_branch538:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch537:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call539:
+after_lambda533:
+  define_variable_bang(sym("cond->if"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry540), env);
+  goto after_lambda541;
+entry540:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("clauses"), null()), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("clauses"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch545;
+compiled_branch546:
+  cont = label(&&after_call547);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch545:
+  val = apply_primitive_procedure(proc, argl);
+after_call547:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch543;
+true_branch542:
+  val = sym("false");
+  goto *value_to_label(cont);
+false_branch543:
+  proc = make_compiled_procedure(label(&&entry548), env);
+  goto after_lambda549;
+entry548:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("first"), cons(sym("rest"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("cond-else-clause?"), env);
+  val = lookup_variable_value(sym("first"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch553;
+compiled_branch554:
+  cont = label(&&after_call555);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch553:
+  val = apply_primitive_procedure(proc, argl);
+after_call555:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch551;
+true_branch550:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("rest"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch559;
+compiled_branch560:
+  cont = label(&&after_call561);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch559:
+  val = apply_primitive_procedure(proc, argl);
+after_call561:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch557;
+true_branch556:
+  proc = lookup_variable_value(sym("sequence->exp"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cond-actions"), env);
+  val = lookup_variable_value(sym("first"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch562;
+compiled_branch563:
+  cont = label(&&after_call564);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch562:
+  val = apply_primitive_procedure(proc, argl);
+after_call564:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch565;
+compiled_branch566:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch565:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call567:
+false_branch557:
+  proc = lookup_variable_value(sym("error"), env);
+  val = lookup_variable_value(sym("clauses"), env);
+  argl = list(val);
+  val = str("ELSE clause isn't last - COND->IF");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch568;
+compiled_branch569:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch568:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call570:
+after_if558:
+false_branch551:
+  proc = lookup_variable_value(sym("make-if"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("expand-clauses"), env);
+  val = lookup_variable_value(sym("rest"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch580;
+compiled_branch581:
+  cont = label(&&after_call582);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch580:
+  val = apply_primitive_procedure(proc, argl);
+after_call582:
+  argl = list(val);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("sequence->exp"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cond-actions"), env);
+  val = lookup_variable_value(sym("first"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch574;
+compiled_branch575:
+  cont = label(&&after_call576);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch574:
+  val = apply_primitive_procedure(proc, argl);
+after_call576:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch577;
+compiled_branch578:
+  cont = label(&&after_call579);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch577:
+  val = apply_primitive_procedure(proc, argl);
+after_call579:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("cond-predicate"), env);
+  val = lookup_variable_value(sym("first"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch571;
+compiled_branch572:
+  cont = label(&&after_call573);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch571:
+  val = apply_primitive_procedure(proc, argl);
+after_call573:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch583;
+compiled_branch584:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch583:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call585:
+after_if552:
+after_lambda549:
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("clauses"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch589;
+compiled_branch590:
+  cont = label(&&after_call591);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch589:
+  val = apply_primitive_procedure(proc, argl);
+after_call591:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("clauses"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch586;
+compiled_branch587:
+  cont = label(&&after_call588);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch586:
+  val = apply_primitive_procedure(proc, argl);
+after_call588:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch592;
+compiled_branch593:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch592:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call594:
+after_if544:
+after_lambda541:
+  define_variable_bang(sym("expand-clauses"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry595), env);
+  goto after_lambda596;
+entry595:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("x"), null()), argl, env);
+  proc = lookup_variable_value(sym("not"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("eq?"), env);
+  val = lookup_variable_value(sym("false"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("x"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch597;
+compiled_branch598:
+  cont = label(&&after_call599);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch597:
+  val = apply_primitive_procedure(proc, argl);
+after_call599:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch600;
+compiled_branch601:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch600:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call602:
+after_lambda596:
+  define_variable_bang(sym("true?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry603), env);
+  goto after_lambda604;
+entry603:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("x"), null()), argl, env);
+  proc = lookup_variable_value(sym("eq?"), env);
+  val = lookup_variable_value(sym("false"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("x"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch605;
+compiled_branch606:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch605:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call607:
+after_lambda604:
+  define_variable_bang(sym("false?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry608), env);
+  goto after_lambda609;
+entry608:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("parameters"), cons(sym("body"), cons(sym("env"), null()))), argl, env);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("body"), env);
+  argl = cons(val, argl);
+  val = lookup_variable_value(sym("parameters"), env);
+  argl = cons(val, argl);
+  val = sym("procedure");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch610;
+compiled_branch611:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch610:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call612:
+after_lambda609:
+  define_variable_bang(sym("make-procedure"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry613), env);
+  goto after_lambda614;
+entry613:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("p"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("procedure");
+  argl = list(val);
+  val = lookup_variable_value(sym("p"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch615;
+compiled_branch616:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch615:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call617:
+after_lambda614:
+  define_variable_bang(sym("compound-procedure?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry618), env);
+  goto after_lambda619;
+entry618:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("p"), null()), argl, env);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("p"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch620;
+compiled_branch621:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch620:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call622:
+after_lambda619:
+  define_variable_bang(sym("procedure-parameters"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry623), env);
+  goto after_lambda624;
+entry623:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("p"), null()), argl, env);
+  proc = lookup_variable_value(sym("caddr"), env);
+  val = lookup_variable_value(sym("p"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch625;
+compiled_branch626:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch625:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call627:
+after_lambda624:
+  define_variable_bang(sym("procedure-body"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry628), env);
+  goto after_lambda629;
+entry628:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("p"), null()), argl, env);
+  proc = lookup_variable_value(sym("cadddr"), env);
+  val = lookup_variable_value(sym("p"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch630;
+compiled_branch631:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch630:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call632:
+after_lambda629:
+  define_variable_bang(sym("procedure-environment"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry633), env);
+  goto after_lambda634;
+entry633:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("env"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch635;
+compiled_branch636:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch635:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call637:
+after_lambda634:
+  define_variable_bang(sym("enclosing-environment"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry638), env);
+  goto after_lambda639;
+entry638:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("env"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch640;
+compiled_branch641:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch640:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call642:
+after_lambda639:
+  define_variable_bang(sym("first-frame"), val, env);
+  val = sym("ok");
+  val = null();
+  define_variable_bang(sym("the-empty-environment"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry643), env);
+  goto after_lambda644;
+entry643:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("variables"), cons(sym("values"), null())), argl, env);
+  proc = lookup_variable_value(sym("cons"), env);
+  val = lookup_variable_value(sym("values"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("variables"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch645;
+compiled_branch646:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch645:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call647:
+after_lambda644:
+  define_variable_bang(sym("make-frame"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry648), env);
+  goto after_lambda649;
+entry648:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("frame"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch650;
+compiled_branch651:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch650:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call652:
+after_lambda649:
+  define_variable_bang(sym("frame-variables"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry653), env);
+  goto after_lambda654;
+entry653:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("frame"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch655;
+compiled_branch656:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch655:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call657:
+after_lambda654:
+  define_variable_bang(sym("frame-values"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry658), env);
+  goto after_lambda659;
+entry658:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("var"), cons(sym("val"), cons(sym("frame"), null()))), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("set-car!"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cons"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch660;
+compiled_branch661:
+  cont = label(&&after_call662);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch660:
+  val = apply_primitive_procedure(proc, argl);
+after_call662:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("var"), env);
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch663;
+compiled_branch664:
+  cont = label(&&after_call665);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch663:
+  val = apply_primitive_procedure(proc, argl);
+after_call665:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("frame"), env);
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch666;
+compiled_branch667:
+  cont = label(&&after_call668);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch666:
+  val = apply_primitive_procedure(proc, argl);
+after_call668:
+  env = pop();
+  cont = pop();
+  proc = lookup_variable_value(sym("set-cdr!"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cons"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch669;
+compiled_branch670:
+  cont = label(&&after_call671);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch669:
+  val = apply_primitive_procedure(proc, argl);
+after_call671:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("val"), env);
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch672;
+compiled_branch673:
+  cont = label(&&after_call674);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch672:
+  val = apply_primitive_procedure(proc, argl);
+after_call674:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("frame"), env);
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch675;
+compiled_branch676:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch675:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call677:
+after_lambda659:
+  define_variable_bang(sym("add-binding-to-frame!"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry678), env);
+  goto after_lambda679;
+entry678:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("vars"), cons(sym("vals"), cons(sym("base-env"), null()))), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("="), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("length"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch686;
+compiled_branch687:
+  cont = label(&&after_call688);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch686:
+  val = apply_primitive_procedure(proc, argl);
+after_call688:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("length"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch683;
+compiled_branch684:
+  cont = label(&&after_call685);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch683:
+  val = apply_primitive_procedure(proc, argl);
+after_call685:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch689;
+compiled_branch690:
+  cont = label(&&after_call691);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch689:
+  val = apply_primitive_procedure(proc, argl);
+after_call691:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch681;
+true_branch680:
+  proc = lookup_variable_value(sym("cons"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("base-env"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("make-frame"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch692;
+compiled_branch693:
+  cont = label(&&after_call694);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch692:
+  val = apply_primitive_procedure(proc, argl);
+after_call694:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch695;
+compiled_branch696:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch695:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call697:
+false_branch681:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("<"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("length"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch704;
+compiled_branch705:
+  cont = label(&&after_call706);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch704:
+  val = apply_primitive_procedure(proc, argl);
+after_call706:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("length"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch701;
+compiled_branch702:
+  cont = label(&&after_call703);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch701:
+  val = apply_primitive_procedure(proc, argl);
+after_call703:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch707;
+compiled_branch708:
+  cont = label(&&after_call709);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch707:
+  val = apply_primitive_procedure(proc, argl);
+after_call709:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch699;
+true_branch698:
+  proc = lookup_variable_value(sym("error"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = cons(val, argl);
+  val = str("Too many arguments supplied");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch710;
+compiled_branch711:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch710:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call712:
+false_branch699:
+  proc = lookup_variable_value(sym("error"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = cons(val, argl);
+  val = str("Too few arguments supplied");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch713;
+compiled_branch714:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch713:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call715:
+after_if700:
+after_if682:
+after_lambda679:
+  define_variable_bang(sym("extend-environment"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry716), env);
+  goto after_lambda717;
+entry716:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("var"), cons(sym("env"), null())), argl, env);
+  proc = make_compiled_procedure(label(&&entry718), env);
+  goto after_lambda719;
+entry718:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("env-loop"), null()), argl, env);
+  val = make_compiled_procedure(label(&&entry720), env);
+  goto after_lambda721;
+entry720:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("env"), null()), argl, env);
+  proc = make_compiled_procedure(label(&&entry722), env);
+  goto after_lambda723;
+entry722:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("scan"), null()), argl, env);
+  val = make_compiled_procedure(label(&&entry724), env);
+  goto after_lambda725;
+entry724:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("vars"), cons(sym("vals"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch729;
+compiled_branch730:
+  cont = label(&&after_call731);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch729:
+  val = apply_primitive_procedure(proc, argl);
+after_call731:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch727;
+true_branch726:
+  proc = lookup_variable_value(sym("env-loop"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("enclosing-environment"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch732;
+compiled_branch733:
+  cont = label(&&after_call734);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch732:
+  val = apply_primitive_procedure(proc, argl);
+after_call734:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch735;
+compiled_branch736:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch735:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call737:
+false_branch727:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("eq?"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch741;
+compiled_branch742:
+  cont = label(&&after_call743);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch741:
+  val = apply_primitive_procedure(proc, argl);
+after_call743:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("var"), env);
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch744;
+compiled_branch745:
+  cont = label(&&after_call746);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch744:
+  val = apply_primitive_procedure(proc, argl);
+after_call746:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch739;
+true_branch738:
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch747;
+compiled_branch748:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch747:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call749:
+false_branch739:
+  proc = lookup_variable_value(sym("scan"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch753;
+compiled_branch754:
+  cont = label(&&after_call755);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch753:
+  val = apply_primitive_procedure(proc, argl);
+after_call755:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch750;
+compiled_branch751:
+  cont = label(&&after_call752);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch750:
+  val = apply_primitive_procedure(proc, argl);
+after_call752:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch756;
+compiled_branch757:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch756:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call758:
+after_if740:
+after_if728:
+after_lambda725:
+  set_variable_value_bang(sym("scan"), val, env);
+  val = sym("ok");
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("eq?"), env);
+  val = lookup_variable_value(sym("the-empty-environment"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("env"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch762;
+compiled_branch763:
+  cont = label(&&after_call764);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch762:
+  val = apply_primitive_procedure(proc, argl);
+after_call764:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch760;
+true_branch759:
+  proc = lookup_variable_value(sym("error"), env);
+  val = lookup_variable_value(sym("var"), env);
+  argl = list(val);
+  val = str("Unbound variable");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch765;
+compiled_branch766:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch765:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call767:
+false_branch760:
+  proc = make_compiled_procedure(label(&&entry768), env);
+  goto after_lambda769;
+entry768:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("frame"), null()), argl, env);
+  proc = lookup_variable_value(sym("scan"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("frame-values"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch773;
+compiled_branch774:
+  cont = label(&&after_call775);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch773:
+  val = apply_primitive_procedure(proc, argl);
+after_call775:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("frame-variables"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch770;
+compiled_branch771:
+  cont = label(&&after_call772);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch770:
+  val = apply_primitive_procedure(proc, argl);
+after_call772:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch776;
+compiled_branch777:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch776:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call778:
+after_lambda769:
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("first-frame"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch779;
+compiled_branch780:
+  cont = label(&&after_call781);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch779:
+  val = apply_primitive_procedure(proc, argl);
+after_call781:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch782;
+compiled_branch783:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch782:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call784:
+after_if761:
+after_lambda723:
+  val = sym("*unassigned*");
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch785;
+compiled_branch786:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch785:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call787:
+after_lambda721:
+  set_variable_value_bang(sym("env-loop"), val, env);
+  val = sym("ok");
+  proc = lookup_variable_value(sym("env-loop"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch788;
+compiled_branch789:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch788:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call790:
+after_lambda719:
+  val = sym("*unassigned*");
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch791;
+compiled_branch792:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch791:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call793:
+after_lambda717:
+  define_variable_bang(sym("lookup-variable-value"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry794), env);
+  goto after_lambda795;
+entry794:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("var"), cons(sym("val"), cons(sym("env"), null()))), argl, env);
+  proc = make_compiled_procedure(label(&&entry796), env);
+  goto after_lambda797;
+entry796:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("env-loop"), null()), argl, env);
+  val = make_compiled_procedure(label(&&entry798), env);
+  goto after_lambda799;
+entry798:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("env"), null()), argl, env);
+  proc = make_compiled_procedure(label(&&entry800), env);
+  goto after_lambda801;
+entry800:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("scan"), null()), argl, env);
+  val = make_compiled_procedure(label(&&entry802), env);
+  goto after_lambda803;
+entry802:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("vars"), cons(sym("vals"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch807;
+compiled_branch808:
+  cont = label(&&after_call809);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch807:
+  val = apply_primitive_procedure(proc, argl);
+after_call809:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch805;
+true_branch804:
+  proc = lookup_variable_value(sym("env-loop"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("enclosing-environment"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch810;
+compiled_branch811:
+  cont = label(&&after_call812);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch810:
+  val = apply_primitive_procedure(proc, argl);
+after_call812:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch813;
+compiled_branch814:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch813:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call815:
+false_branch805:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("eq?"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch819;
+compiled_branch820:
+  cont = label(&&after_call821);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch819:
+  val = apply_primitive_procedure(proc, argl);
+after_call821:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("var"), env);
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch822;
+compiled_branch823:
+  cont = label(&&after_call824);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch822:
+  val = apply_primitive_procedure(proc, argl);
+after_call824:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch817;
+true_branch816:
+  proc = lookup_variable_value(sym("set-car!"), env);
+  val = lookup_variable_value(sym("val"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch825;
+compiled_branch826:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch825:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call827:
+false_branch817:
+  proc = lookup_variable_value(sym("scan"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch831;
+compiled_branch832:
+  cont = label(&&after_call833);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch831:
+  val = apply_primitive_procedure(proc, argl);
+after_call833:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch828;
+compiled_branch829:
+  cont = label(&&after_call830);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch828:
+  val = apply_primitive_procedure(proc, argl);
+after_call830:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch834;
+compiled_branch835:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch834:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call836:
+after_if818:
+after_if806:
+after_lambda803:
+  set_variable_value_bang(sym("scan"), val, env);
+  val = sym("ok");
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("eq?"), env);
+  val = lookup_variable_value(sym("the-empty-environment"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("env"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch840;
+compiled_branch841:
+  cont = label(&&after_call842);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch840:
+  val = apply_primitive_procedure(proc, argl);
+after_call842:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch838;
+true_branch837:
+  proc = lookup_variable_value(sym("error"), env);
+  val = lookup_variable_value(sym("var"), env);
+  argl = list(val);
+  val = str("Unbound variable - SET!");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch843;
+compiled_branch844:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch843:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call845:
+false_branch838:
+  proc = make_compiled_procedure(label(&&entry846), env);
+  goto after_lambda847;
+entry846:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("frame"), null()), argl, env);
+  proc = lookup_variable_value(sym("scan"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("frame-values"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch851;
+compiled_branch852:
+  cont = label(&&after_call853);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch851:
+  val = apply_primitive_procedure(proc, argl);
+after_call853:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("frame-variables"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch848;
+compiled_branch849:
+  cont = label(&&after_call850);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch848:
+  val = apply_primitive_procedure(proc, argl);
+after_call850:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch854;
+compiled_branch855:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch854:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call856:
+after_lambda847:
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("first-frame"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch857;
+compiled_branch858:
+  cont = label(&&after_call859);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch857:
+  val = apply_primitive_procedure(proc, argl);
+after_call859:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch860;
+compiled_branch861:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch860:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call862:
+after_if839:
+after_lambda801:
+  val = sym("*unassigned*");
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch863;
+compiled_branch864:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch863:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call865:
+after_lambda799:
+  set_variable_value_bang(sym("env-loop"), val, env);
+  val = sym("ok");
+  proc = lookup_variable_value(sym("env-loop"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch866;
+compiled_branch867:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch866:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call868:
+after_lambda797:
+  val = sym("*unassigned*");
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch869;
+compiled_branch870:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch869:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call871:
+after_lambda795:
+  define_variable_bang(sym("set-variable-value!"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry872), env);
+  goto after_lambda873;
+entry872:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("var"), cons(sym("val"), cons(sym("env"), null()))), argl, env);
+  proc = make_compiled_procedure(label(&&entry874), env);
+  goto after_lambda875;
+entry874:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("frame"), null()), argl, env);
+  proc = make_compiled_procedure(label(&&entry876), env);
+  goto after_lambda877;
+entry876:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("scan"), null()), argl, env);
+  val = make_compiled_procedure(label(&&entry878), env);
+  goto after_lambda879;
+entry878:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("vars"), cons(sym("vals"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch883;
+compiled_branch884:
+  cont = label(&&after_call885);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch883:
+  val = apply_primitive_procedure(proc, argl);
+after_call885:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch881;
+true_branch880:
+  proc = lookup_variable_value(sym("add-binding-to-frame!"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("val"), env);
+  argl = cons(val, argl);
+  val = lookup_variable_value(sym("var"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch886;
+compiled_branch887:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch886:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call888:
+false_branch881:
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("eq?"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch892;
+compiled_branch893:
+  cont = label(&&after_call894);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch892:
+  val = apply_primitive_procedure(proc, argl);
+after_call894:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("var"), env);
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch895;
+compiled_branch896:
+  cont = label(&&after_call897);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch895:
+  val = apply_primitive_procedure(proc, argl);
+after_call897:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch890;
+true_branch889:
+  proc = lookup_variable_value(sym("set-car!"), env);
+  val = lookup_variable_value(sym("val"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch898;
+compiled_branch899:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch898:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call900:
+false_branch890:
+  proc = lookup_variable_value(sym("scan"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("vals"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch904;
+compiled_branch905:
+  cont = label(&&after_call906);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch904:
+  val = apply_primitive_procedure(proc, argl);
+after_call906:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("vars"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch901;
+compiled_branch902:
+  cont = label(&&after_call903);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch901:
+  val = apply_primitive_procedure(proc, argl);
+after_call903:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch907;
+compiled_branch908:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch907:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call909:
+after_if891:
+after_if882:
+after_lambda879:
+  set_variable_value_bang(sym("scan"), val, env);
+  val = sym("ok");
+  proc = lookup_variable_value(sym("scan"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("frame-values"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch913;
+compiled_branch914:
+  cont = label(&&after_call915);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch913:
+  val = apply_primitive_procedure(proc, argl);
+after_call915:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("frame-variables"), env);
+  val = lookup_variable_value(sym("frame"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch910;
+compiled_branch911:
+  cont = label(&&after_call912);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch910:
+  val = apply_primitive_procedure(proc, argl);
+after_call912:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch916;
+compiled_branch917:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch916:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call918:
+after_lambda877:
+  val = sym("*unassigned*");
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch919;
+compiled_branch920:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch919:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call921:
+after_lambda875:
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("first-frame"), env);
+  val = lookup_variable_value(sym("env"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch922;
+compiled_branch923:
+  cont = label(&&after_call924);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch922:
+  val = apply_primitive_procedure(proc, argl);
+after_call924:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch925;
+compiled_branch926:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch925:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call927:
+after_lambda873:
+  define_variable_bang(sym("define-variable!"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry928), env);
+  goto after_lambda929;
+entry928:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("proc"), null()), argl, env);
+  proc = lookup_variable_value(sym("tagged-list?"), env);
+  val = sym("evaluator-primitive");
+  argl = list(val);
+  val = lookup_variable_value(sym("proc"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch930;
+compiled_branch931:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch930:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call932:
+after_lambda929:
+  define_variable_bang(sym("primitive-procedure?"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry933), env);
+  goto after_lambda934;
+entry933:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("proc"), null()), argl, env);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("proc"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch935;
+compiled_branch936:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch935:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call937:
+after_lambda934:
+  define_variable_bang(sym("primitive-implementation"), val, env);
+  val = sym("ok");
+  push(env);
+  proc = lookup_variable_value(sym("list"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("<"), env);
+  argl = list(val);
+  val = sym("<");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch977;
+compiled_branch978:
+  cont = label(&&after_call979);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch977:
+  val = apply_primitive_procedure(proc, argl);
+after_call979:
+  argl = list(val);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("*"), env);
+  argl = list(val);
+  val = sym("*");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch974;
+compiled_branch975:
+  cont = label(&&after_call976);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch974:
+  val = apply_primitive_procedure(proc, argl);
+after_call976:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("-"), env);
+  argl = list(val);
+  val = sym("-");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch971;
+compiled_branch972:
+  cont = label(&&after_call973);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch971:
+  val = apply_primitive_procedure(proc, argl);
+after_call973:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("+"), env);
+  argl = list(val);
+  val = sym("+");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch968;
+compiled_branch969:
+  cont = label(&&after_call970);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch968:
+  val = apply_primitive_procedure(proc, argl);
+after_call970:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("="), env);
+  argl = list(val);
+  val = sym("=");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch965;
+compiled_branch966:
+  cont = label(&&after_call967);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch965:
+  val = apply_primitive_procedure(proc, argl);
+after_call967:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("gc-runs"), env);
+  argl = list(val);
+  val = sym("gc-runs");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch962;
+compiled_branch963:
+  cont = label(&&after_call964);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch962:
+  val = apply_primitive_procedure(proc, argl);
+after_call964:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("stack-max-depth"), env);
+  argl = list(val);
+  val = sym("stack-max-depth");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch959;
+compiled_branch960:
+  cont = label(&&after_call961);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch959:
+  val = apply_primitive_procedure(proc, argl);
+after_call961:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("equal?"), env);
+  argl = list(val);
+  val = sym("equal?");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch956;
+compiled_branch957:
+  cont = label(&&after_call958);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch956:
+  val = apply_primitive_procedure(proc, argl);
+after_call958:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("null?"), env);
+  argl = list(val);
+  val = sym("null?");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch953;
+compiled_branch954:
+  cont = label(&&after_call955);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch953:
+  val = apply_primitive_procedure(proc, argl);
+after_call955:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("display"), env);
+  argl = list(val);
+  val = sym("display");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch950;
+compiled_branch951:
+  cont = label(&&after_call952);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch950:
+  val = apply_primitive_procedure(proc, argl);
+after_call952:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("list"), env);
+  argl = list(val);
+  val = sym("list");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch947;
+compiled_branch948:
+  cont = label(&&after_call949);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch947:
+  val = apply_primitive_procedure(proc, argl);
+after_call949:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("cons"), env);
+  argl = list(val);
+  val = sym("cons");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch944;
+compiled_branch945:
+  cont = label(&&after_call946);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch944:
+  val = apply_primitive_procedure(proc, argl);
+after_call946:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("cdr"), env);
+  argl = list(val);
+  val = sym("cdr");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch941;
+compiled_branch942:
+  cont = label(&&after_call943);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch941:
+  val = apply_primitive_procedure(proc, argl);
+after_call943:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("list"), env);
+  val = lookup_variable_value(sym("car"), env);
+  argl = list(val);
+  val = sym("car");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch938;
+compiled_branch939:
+  cont = label(&&after_call940);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch938:
+  val = apply_primitive_procedure(proc, argl);
+after_call940:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch980;
+compiled_branch981:
+  cont = label(&&after_call982);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch980:
+  val = apply_primitive_procedure(proc, argl);
+after_call982:
+  env = pop();
+  define_variable_bang(sym("primitive-procedures"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry983), env);
+  goto after_lambda984;
+entry983:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(null(), argl, env);
+  proc = lookup_variable_value(sym("map"), env);
+  val = lookup_variable_value(sym("primitive-procedures"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("car"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch985;
+compiled_branch986:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch985:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call987:
+after_lambda984:
+  define_variable_bang(sym("primitive-procedure-names"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry988), env);
+  goto after_lambda989;
+entry988:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(null(), argl, env);
+  proc = lookup_variable_value(sym("map"), env);
+  val = lookup_variable_value(sym("primitive-procedures"), env);
+  argl = list(val);
+  val = make_compiled_procedure(label(&&entry990), env);
+  goto after_lambda991;
+entry990:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("proc"), null()), argl, env);
+  proc = lookup_variable_value(sym("list"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cadr"), env);
+  val = lookup_variable_value(sym("proc"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch992;
+compiled_branch993:
+  cont = label(&&after_call994);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch992:
+  val = apply_primitive_procedure(proc, argl);
+after_call994:
+  argl = list(val);
+  val = sym("evaluator-primitive");
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch995;
+compiled_branch996:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch995:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call997:
+after_lambda991:
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch998;
+compiled_branch999:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch998:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1000:
+after_lambda989:
+  define_variable_bang(sym("primitive-procedure-objects"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1001), env);
+  goto after_lambda1002;
+entry1001:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("proc"), cons(sym("args"), null())), argl, env);
+  proc = lookup_variable_value(sym("apply-primitive"), env);
+  push(cont);
+  push(proc);
+  val = lookup_variable_value(sym("args"), env);
+  argl = list(val);
+  push(argl);
+  proc = lookup_variable_value(sym("primitive-implementation"), env);
+  val = lookup_variable_value(sym("proc"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1003;
+compiled_branch1004:
+  cont = label(&&after_call1005);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1003:
+  val = apply_primitive_procedure(proc, argl);
+after_call1005:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1006;
+compiled_branch1007:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1006:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1008:
+after_lambda1002:
+  define_variable_bang(sym("apply-primitive-procedure"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1009), env);
+  goto after_lambda1010;
+entry1009:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(null(), argl, env);
+  proc = make_compiled_procedure(label(&&entry1011), env);
+  goto after_lambda1012;
+entry1011:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("initial-env"), null()), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("define-variable!"), env);
+  val = lookup_variable_value(sym("initial-env"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("true"), env);
+  argl = cons(val, argl);
+  val = sym("true");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1013;
+compiled_branch1014:
+  cont = label(&&after_call1015);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1013:
+  val = apply_primitive_procedure(proc, argl);
+after_call1015:
+  env = pop();
+  cont = pop();
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("define-variable!"), env);
+  val = lookup_variable_value(sym("initial-env"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("false"), env);
+  argl = cons(val, argl);
+  val = sym("false");
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1016;
+compiled_branch1017:
+  cont = label(&&after_call1018);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1016:
+  val = apply_primitive_procedure(proc, argl);
+after_call1018:
+  env = pop();
+  cont = pop();
+  val = lookup_variable_value(sym("initial-env"), env);
+  goto *value_to_label(cont);
+after_lambda1012:
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("extend-environment"), env);
+  push(proc);
+  val = lookup_variable_value(sym("the-empty-environment"), env);
+  argl = list(val);
+  push(env);
+  push(argl);
+  proc = lookup_variable_value(sym("primitive-procedure-objects"), env);
+  argl = null();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1022;
+compiled_branch1023:
+  cont = label(&&after_call1024);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1022:
+  val = apply_primitive_procedure(proc, argl);
+after_call1024:
+  argl = pop();
+  argl = cons(val, argl);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("primitive-procedure-names"), env);
+  argl = null();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1019;
+compiled_branch1020:
+  cont = label(&&after_call1021);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1019:
+  val = apply_primitive_procedure(proc, argl);
+after_call1021:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1025;
+compiled_branch1026:
+  cont = label(&&after_call1027);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1025:
+  val = apply_primitive_procedure(proc, argl);
+after_call1027:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1028;
+compiled_branch1029:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1028:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1030:
+after_lambda1010:
+  define_variable_bang(sym("setup-environment"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1031), env);
+  goto after_lambda1032;
+entry1031:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("proc"), cons(sym("lst"), null())), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1036;
+compiled_branch1037:
+  cont = label(&&after_call1038);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1036:
+  val = apply_primitive_procedure(proc, argl);
+after_call1038:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch1034;
+true_branch1033:
+  val = null();
+  goto *value_to_label(cont);
+false_branch1034:
+  proc = lookup_variable_value(sym("cons"), env);
+  push(cont);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("map"), env);
+  push(proc);
+  push(env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1045;
+compiled_branch1046:
+  cont = label(&&after_call1047);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1045:
+  val = apply_primitive_procedure(proc, argl);
+after_call1047:
+  argl = list(val);
+  env = pop();
+  val = lookup_variable_value(sym("proc"), env);
+  argl = cons(val, argl);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1048;
+compiled_branch1049:
+  cont = label(&&after_call1050);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1048:
+  val = apply_primitive_procedure(proc, argl);
+after_call1050:
+  argl = list(val);
+  env = pop();
+  push(argl);
+  proc = lookup_variable_value(sym("proc"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("car"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1039;
+compiled_branch1040:
+  cont = label(&&after_call1041);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1039:
+  val = apply_primitive_procedure(proc, argl);
+after_call1041:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1042;
+compiled_branch1043:
+  cont = label(&&after_call1044);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1042:
+  val = apply_primitive_procedure(proc, argl);
+after_call1044:
+  argl = pop();
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1051;
+compiled_branch1052:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1051:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1053:
+after_if1035:
+after_lambda1032:
+  define_variable_bang(sym("map"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1054), env);
+  goto after_lambda1055;
+entry1054:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("lst"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1056;
+compiled_branch1057:
+  cont = label(&&after_call1058);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1056:
+  val = apply_primitive_procedure(proc, argl);
+after_call1058:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1059;
+compiled_branch1060:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1059:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1061:
+after_lambda1055:
+  define_variable_bang(sym("cadr"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1062), env);
+  goto after_lambda1063;
+entry1062:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("lst"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1064;
+compiled_branch1065:
+  cont = label(&&after_call1066);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1064:
+  val = apply_primitive_procedure(proc, argl);
+after_call1066:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1067;
+compiled_branch1068:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1067:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1069:
+after_lambda1063:
+  define_variable_bang(sym("cddr"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1070), env);
+  goto after_lambda1071;
+entry1070:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("lst"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("car"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1072;
+compiled_branch1073:
+  cont = label(&&after_call1074);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1072:
+  val = apply_primitive_procedure(proc, argl);
+after_call1074:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1075;
+compiled_branch1076:
+  cont = label(&&after_call1077);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1075:
+  val = apply_primitive_procedure(proc, argl);
+after_call1077:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1078;
+compiled_branch1079:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1078:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1080:
+after_lambda1071:
+  define_variable_bang(sym("caadr"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1081), env);
+  goto after_lambda1082;
+entry1081:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("lst"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1083;
+compiled_branch1084:
+  cont = label(&&after_call1085);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1083:
+  val = apply_primitive_procedure(proc, argl);
+after_call1085:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1086;
+compiled_branch1087:
+  cont = label(&&after_call1088);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1086:
+  val = apply_primitive_procedure(proc, argl);
+after_call1088:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1089;
+compiled_branch1090:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1089:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1091:
+after_lambda1082:
+  define_variable_bang(sym("caddr"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1092), env);
+  goto after_lambda1093;
+entry1092:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("lst"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("car"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1094;
+compiled_branch1095:
+  cont = label(&&after_call1096);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1094:
+  val = apply_primitive_procedure(proc, argl);
+after_call1096:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1097;
+compiled_branch1098:
+  cont = label(&&after_call1099);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1097:
+  val = apply_primitive_procedure(proc, argl);
+after_call1099:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1100;
+compiled_branch1101:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1100:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1102:
+after_lambda1093:
+  define_variable_bang(sym("cdadr"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1103), env);
+  goto after_lambda1104;
+entry1103:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("lst"), null()), argl, env);
+  proc = lookup_variable_value(sym("cdr"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1105;
+compiled_branch1106:
+  cont = label(&&after_call1107);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1105:
+  val = apply_primitive_procedure(proc, argl);
+after_call1107:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1108;
+compiled_branch1109:
+  cont = label(&&after_call1110);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1108:
+  val = apply_primitive_procedure(proc, argl);
+after_call1110:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1111;
+compiled_branch1112:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1111:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1113:
+after_lambda1104:
+  define_variable_bang(sym("cdddr"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1114), env);
+  goto after_lambda1115;
+entry1114:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("lst"), null()), argl, env);
+  proc = lookup_variable_value(sym("car"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1116;
+compiled_branch1117:
+  cont = label(&&after_call1118);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1116:
+  val = apply_primitive_procedure(proc, argl);
+after_call1118:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1119;
+compiled_branch1120:
+  cont = label(&&after_call1121);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1119:
+  val = apply_primitive_procedure(proc, argl);
+after_call1121:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1122;
+compiled_branch1123:
+  cont = label(&&after_call1124);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1122:
+  val = apply_primitive_procedure(proc, argl);
+after_call1124:
+  argl = list(val);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1125;
+compiled_branch1126:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1125:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1127:
+after_lambda1115:
+  define_variable_bang(sym("cadddr"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1128), env);
+  goto after_lambda1129;
+entry1128:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("x"), null()), argl, env);
+  val = lookup_variable_value(sym("x"), env);
+  test = false_p(val);
+  if (test) goto false_branch1131;
+true_branch1130:
+  val = lookup_variable_value(sym("false"), env);
+  goto *value_to_label(cont);
+false_branch1131:
+  val = lookup_variable_value(sym("true"), env);
+  goto *value_to_label(cont);
+after_if1132:
+after_lambda1129:
+  define_variable_bang(sym("not"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1133), env);
+  goto after_lambda1134;
+entry1133:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("lst"), null()), argl, env);
+  push(cont);
+  push(env);
+  proc = lookup_variable_value(sym("null?"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1138;
+compiled_branch1139:
+  cont = label(&&after_call1140);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1138:
+  val = apply_primitive_procedure(proc, argl);
+after_call1140:
+  env = pop();
+  cont = pop();
+  test = false_p(val);
+  if (test) goto false_branch1136;
+true_branch1135:
+  val = num(0);
+  goto *value_to_label(cont);
+false_branch1136:
+  proc = lookup_variable_value(sym("+"), env);
+  push(cont);
+  push(proc);
+  proc = lookup_variable_value(sym("length"), env);
+  push(proc);
+  proc = lookup_variable_value(sym("cdr"), env);
+  val = lookup_variable_value(sym("lst"), env);
+  argl = list(val);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1141;
+compiled_branch1142:
+  cont = label(&&after_call1143);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1141:
+  val = apply_primitive_procedure(proc, argl);
+after_call1143:
+  argl = list(val);
+  proc = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1144;
+compiled_branch1145:
+  cont = label(&&after_call1146);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1144:
+  val = apply_primitive_procedure(proc, argl);
+after_call1146:
+  argl = list(val);
+  val = num(1);
+  argl = cons(val, argl);
+  proc = pop();
+  cont = pop();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1147;
+compiled_branch1148:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1147:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1149:
+after_if1137:
+after_lambda1134:
+  define_variable_bang(sym("length"), val, env);
+  val = sym("ok");
+  push(env);
+  proc = lookup_variable_value(sym("setup-environment"), env);
+  argl = null();
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1150;
+compiled_branch1151:
+  cont = label(&&after_call1152);
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1150:
+  val = apply_primitive_procedure(proc, argl);
+after_call1152:
+  env = pop();
+  define_variable_bang(sym("the-global-environment"), val, env);
+  val = sym("ok");
+  val = make_compiled_procedure(label(&&entry1153), env);
+  goto after_lambda1154;
+entry1153:
+  env = compiled_procedure_env(proc);
+  env = extend_environment(cons(sym("exp"), null()), argl, env);
+  proc = lookup_variable_value(sym("evaluate"), env);
+  val = lookup_variable_value(sym("the-global-environment"), env);
+  argl = list(val);
+  val = lookup_variable_value(sym("exp"), env);
+  argl = cons(val, argl);
+  test = primitive_procedure_p(proc);
+  if (test) goto primitive_branch1155;
+compiled_branch1156:
+  val = compiled_procedure_entry(proc);
+  goto *value_to_label(val);
+primitive_branch1155:
+  val = apply_primitive_procedure(proc, argl);
+  goto *value_to_label(cont);
+after_call1157:
+after_lambda1154:
+  define_variable_bang(sym("eval*"), val, env);
+  val = sym("ok");
