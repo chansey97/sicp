@@ -1,7 +1,10 @@
 #lang racket
-(require "evaluator.rkt")
-(require "database.rkt") ; add assertions and rules to database
+(require "./evaluator.rkt")
+(require "./helpers.rkt")
+(require "./database.rkt")
+
 (ns-initialize (module->namespace "evaluator.rkt"))
+(add-to-data-base! database-assertions)
 (query-driver-loop)
 
 ;; add assertion
@@ -9,4 +12,3 @@
 
 ;; query
 ;; (job ?x (computer wizard))
-

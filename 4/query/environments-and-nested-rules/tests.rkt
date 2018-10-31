@@ -1,10 +1,11 @@
 #lang racket
 (require rackunit rackunit/text-ui)
 (require "evaluator.rkt")
-(require "test-helpers.rkt")
+(require "helpers.rkt")
 (require "database.rkt")
 
 (ns-initialize (module->namespace "evaluator.rkt"))
+(add-to-data-base! database-assertions)
 
 (define sicp-4.79-tests
   (test-suite

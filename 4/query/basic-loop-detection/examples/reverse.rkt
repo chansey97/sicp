@@ -10,10 +10,11 @@
 #lang racket
 (require rackunit rackunit/text-ui)
 (require "../evaluator.rkt")
-(require "../test-helpers.rkt")
+(require "../helpers.rkt")
 (require "../database.rkt")
 
 (ns-initialize (module->namespace "../evaluator.rkt"))
+(add-to-data-base! database-assertions)
 
 ;; https://github.com/skanev/playground/blob/master/scheme/sicp/04/68.scm
 ;; (add-to-data-base!

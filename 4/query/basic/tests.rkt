@@ -1,10 +1,11 @@
 #lang racket
 (require rackunit rackunit/text-ui)
 (require "evaluator.rkt")
-(require "test-helpers.rkt")
+(require "helpers.rkt")
 (require "database.rkt")
 
 (ns-initialize (module->namespace "evaluator.rkt"))
+(add-to-data-base! database-assertions)
 
 (define (stream . items)
   (if (null? items)
@@ -114,6 +115,7 @@
       (check-equal? (stream->list (qeval '(always-true) (singleton-stream '())))
                     '(())))
 
+    ;; 产生frame里产生'()，不表示失败，failed才表示失败
     (test-suite "pattern matching"
       (check-equal? (pattern-match 'a 'a '()) '())
       (check-equal? (pattern-match 'a 'b '()) 'failed)

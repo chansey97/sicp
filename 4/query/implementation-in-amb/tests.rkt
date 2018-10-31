@@ -3,13 +3,14 @@
 ;; Note: There is the same name function "require" in evaluator.rkt,
 ;; instread of rename-in I arrange them in one require expression.
 ;; (require "evaluator.rkt")
-;; (require "test-helpers.rkt")
+;; (require "helpers.rkt")
 ;; (require "database.rkt")
 (require "evaluator.rkt"
-         "test-helpers.rkt"
+         "helpers.rkt"
          "database.rkt")
 
 (ns-initialize (module->namespace "evaluator.rkt"))
+(add-to-data-base! database-assertions)
 
 (define sicp-4.78-tests
   (test-suite

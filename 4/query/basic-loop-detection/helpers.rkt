@@ -2,6 +2,10 @@
 (provide (all-defined-out))
 (require "evaluator.rkt")
 
+(define (add-to-data-base! assertions)
+  (for-each (compose add-rule-or-assertion! query-syntax-process)
+            assertions))
+
 (define (matches-of query)
   (let ((processed-query (query-syntax-process query)))
     (stream->list

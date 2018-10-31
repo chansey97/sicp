@@ -71,9 +71,3 @@
     (rule (append-to-form () ?y ?y))
     (rule (append-to-form (?u . ?v) ?y (?u . ?z))
           (append-to-form ?v ?y ?z))))
-
-(define (add-to-data-base! assertions)
-  (for-each (compose add-rule-or-assertion! query-syntax-process)
-            assertions))
-
-(add-to-data-base! database-assertions)

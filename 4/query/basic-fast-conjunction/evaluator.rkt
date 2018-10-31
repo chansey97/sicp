@@ -1,43 +1,49 @@
-;; Logic Programming
-
-;; 1. Logic programming phrase
-;; Use logic to express what is true. -- write rules
-;; Use logic to check whether something is true -- query which has no pattern variable, eg: is it true that 1 3 7 and 2 4 8 merge to from (1 2 6 10)? no
-;; Use logic to find out what is true -- query which has pattern variable
-
-;; 2. Eval/apply metacircular
-;; Even though logic rules and procedures are very different, the eval-apply process is nearly identical.
-
-;; To apply a rule
-;; Evaluate the rule body relative to an
-;; environment formed by unifynig the rule
-;; conclusions with the given query.
-
-;; To apply a procedure
-;; Evaluate the procedure body relative to
-;; an environment formed by binding the
-;; procedure parameters to the arguments.
-
-;; qeval and apply-a-rule here are stream-based eval/apply metacircular.
-
-;; 3. Evaluation order
-;; All of these rules in pattern matcher and with the delayed action of streams, you really have no way to know in what order things are evaluated.
-;; contrasting with Prolog. Prolog has various features where you really exploit the order of evaluation. And people write Prolog programs that way.
-;; That turns out to be very complicated in Prolog,although if you're an expert Prolog programmer, you can do it.
-
-; This is the query language from the Logic Programming section in SICP. There
-; are some modifications to the original code:
+; SICP exercise 4.76
 ;
-; * Racket stream procedures are differently named than the ones described in
-;   the book.
-; * Racket streams are different than the streams described in SICP in that
-;   they delay their cdr. This removes the need to have delayed versions of
-;   the stream procedures. (Exercise 4.71 4.73)
-; * The query system in the book stores rules and assertions in an order that
-;   is the reverse of their definition order, which introduces inconsistencies
-;   between the shown examples and the actual results. This implementation
-;   stores the rules and assertions as lists and converts them to a stream in
-;   which their elements appear in reverse order upon retrieval.
+; Our implementation of and as a series combination of queries (figure 4.5) is
+; elegant, but it is inefficient because in processing the second query of the
+; and we must scan the data base for each frame produced by the first query.
+; If the data base has N elements, and a typical query produces a number of
+; output frames proportional to N (say N/k), then scanning the data base for
+; each frame produced by the first query will require N²/k calls to the
+; pattern matcher. Another approach would be to process the two clauses of the
+; and separately, then look for all pairs of output frames that are
+; compatible. If each query produces N/k output frames, then this means that
+; we must perform N²/k² compatibility checks -- a factor of k fewer than the
+; number of matches required in our current method.
+;
+; Devise an implementation of and that uses this strategy. You must implement
+; a procedure that takes two frames as inputs, checks whether the bindings in
+; the frames are compatible, and, if so, produces a frame that merges the two
+; sets of bindings. This operation is similar to unification.
+
+; The implementation is below. It has its disadvantages, though. First, the
+; following query stops working:
+;
+; (and (supervisor ?x (Bitdiddle Ben))
+;      (not (job ?x (computer programmer))))
+;
+; The reason is that (not (job ?x (computer programmer))) results to the empty
+; stream of frames.
+;
+; There is another issue, which is illustrated in the outranked-by rule:
+;
+; (rule (outranked-by ?staff-person ?boss)
+;       (or (supervisor ?staff-person ?boss)
+;           (and (supervisor ?staff-person ?middle-manager)
+;                (outranked-by ?middle-manager ?boss))))
+;
+; In this case, outranked-by results to an infinte loop, since
+;
+; (outranked-by ?staff-person ?boss)
+;
+; calls directly
+;
+; (outranked-by ?middle-manager ?boss)
+;
+; and all frames (not just the reduced set of frames from the previous
+; conjunct.
+
 #lang racket
 (provide (all-defined-out))
 
@@ -128,6 +134,33 @@
       (conjoin (rest-conjuncts conjuncts)
                (qeval (first-conjunct conjuncts)
                       frame-stream))))
+
+;; Exercise 4.76
+(define (merge-frames frame1 frame2)
+  (cond ((null? frame1) frame2)
+        ((eq? 'failed frame2) 'failed)
+        (else
+         (let ((var (binding-variable (car frame1)))
+               (val (binding-value (car frame1))))
+           (let ((extension (extend-if-possible var val frame2)))
+             (merge-frames (cdr frame1) extension))))))
+
+(define (conjoin-frame-streams stream1 stream2)
+  (stream-flatmap
+   (lambda (frame1)
+     (stream-filter
+      (lambda (frame) (not (eq? frame 'failed)))
+      (stream-map
+       (lambda (frame2) (merge-frames frame1 frame2))
+       stream2)))
+   stream1))
+
+(define (faster-conjoin conjuncts frame-stream)
+  (if (empty-conjunction? conjuncts)
+      frame-stream
+      (conjoin-frame-streams
+       (qeval (first-conjunct conjuncts) frame-stream)
+       (conjoin (rest-conjuncts conjuncts) frame-stream))))
 
 ;; Exercise 4.71 delay
 (define (disjoin disjuncts frame-stream)
@@ -222,7 +255,7 @@
         ((var? p1) (extend-if-possible p1 p2 frame))
         ((var? p2) (extend-if-possible p2 p1 frame)) ; ***
         ((and (pair? p1) (pair? p2))
-         ;; The form is very similar to pattern-match and "match" in "../../../2/simplifier"
+         ;; The form is very similar to pattern-match and "match" in ../../../2/simplifier
          (unify-match (cdr p1)
                       (cdr p2)
                       (unify-match (car p1)
@@ -257,7 +290,7 @@
           (else false)))
   (let ((result (tree-walk exp)))
     (if result
-        (println "depends-on") ; debug information
+        (println "depends-on")
         'ok)
     result
     )
@@ -470,7 +503,7 @@
   (set! THE-ASSERTIONS '())
   (set! THE-RULES '())
 
-  (put 'and 'qeval conjoin)
+  (put 'and 'qeval faster-conjoin)
   (put 'or 'qeval disjoin)
   (put 'not 'qeval negate)
   (put 'lisp-value 'qeval lisp-value)
