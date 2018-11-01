@@ -117,7 +117,7 @@
       (cond ((null? rest) #t)
             ((same-type? (car args) (car rest)) (check (cdr rest)))
             (else #f)))
-    (check args))
+    (check (cdr args)))
 
   (define (of-same-type-and-raisable? args)
     (and (all-of-same-type? args)
