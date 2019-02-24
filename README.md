@@ -1,2 +1,2 @@
 # sicp
-Valuable code from the book "Structure and Interpretation of Computer Programs" 
+Valuable code and exercises from the book "Structure and Interpretation of Computer Programs" 
