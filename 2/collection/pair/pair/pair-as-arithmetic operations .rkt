@@ -37,3 +37,13 @@
 ))
 
 (run-tests sicp-2.05-tests)
+
+;; This is Gödel numbering, that means:  
+;; (Nat, Nat) ~ Nat
+;; They are is bijective, has same cardinality, even if (Nat, Nat) and Nat are infinite set!
+
+;; f :: (Nat, Nat) -> Nat 
+;; f (a, b) = 2^a * 3^b
+;; f^-1 :: Nat -> Nat, Nat) 
+;; f^-1 n = (a = number of factors of 2, b = number of factors of 3) ; fundamental theorem of arithmetic
+
