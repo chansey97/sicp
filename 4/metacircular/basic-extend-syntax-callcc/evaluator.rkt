@@ -206,6 +206,13 @@
         ((for? exp) (evaluate (for->lambda exp) env))
         ((while? exp) (evaluate (while->lambda exp) env))
         ((until? exp) (evaluate (until->lambda exp) env))
+        ((call/cc? exp)
+         (let ((p (evaluate (call/cc-e exp) env)))
+           (call/cc (λ (k) (apply-procedure p (list k))))))
+        ((throw? exp)
+         (let ((k (evaluate (throw-k exp) env))
+               (v (evaluate (throw-v exp) env)))
+           (k v)))
         ((application? exp)
          (apply-procedure (evaluate (operator exp) env)
                           (list-of-values (operands exp) env)))
@@ -406,6 +413,13 @@
 (define (cond-predicate clause) (car clause))
 (define (cond-actions clause) (cdr clause))
 (define (cond-stabby-recipient clause) (caddr clause))
+
+(define (call/cc? exp) (tagged-list? exp 'call/cc))
+(define (call/cc-e exp) (cadr exp))
+
+(define (throw? exp) (tagged-list? exp 'throw))
+(define (throw-k exp) (cadr exp))
+(define (throw-v exp) (caddr exp))
 
 ;; derived expressions
 

@@ -301,3 +301,14 @@
 (run-tests sicp-4.08-tests)
 (run-tests sicp-4.09-tests)
 (run-tests sicp-4.20-tests)
+
+;; https://stackoverflow.com/questions/63345691/is-there-a-sicp-metacircular-evaluator-that-implements-call-with-current-continu
+(define stackoverflow-callcc-tests
+  (test-suite
+   "Tests for callcc"
+   
+  (check-equal? 6 (run '(+ 1 (call/cc (lambda (k) (* 10 (throw k 5)))))))
+))
+
+(run-tests stackoverflow-callcc-tests)
+
