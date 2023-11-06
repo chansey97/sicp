@@ -80,8 +80,9 @@
   (require rackunit rackunit/text-ui)
 
   (define sense-data (list->infinite-stream '(1 2 1.5 1 0.5 -0.1 -2 -3 -2 -0.5 0.2 3 4)))
-  
-  ;; (println (stream-take (smooth sense-data) 13))
+
+  (println (stream-take sense-data 3))
+  (println (stream-take (smooth sense-data) 3))
   ;; (println (stream-take (make-zero-crossings sense-data 0) 13))
   
   (define sicp-3.76-tests
