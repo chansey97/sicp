@@ -24,6 +24,10 @@
          "../../stream/op-streams.rkt"
          "../signal-processing.rkt")
 
+;; Note:
+;; Recommand see my Haskell code (a lot of examples)
+;; https://github.com/chansey97/experiments/blob/main/haskell/stream/SICP/DifferentialEquation.hs
+
 ;; Exercise 3.78
 (define (solve-2nd a b dt y0 dy0)
   (define y (integral-delayed (delay dy) y0 dt))
@@ -36,5 +40,5 @@
 (define (solve-2nd-generic f y0 dy0 dt)
   (define y (integral-delayed (delay dy) y0 dt))
   (define dy (integral-delayed (delay ddy) dy0 dt))
-  (define ddy (stream-map f dy y))
+  (define ddy (stream-map f dy y)) ; TODO: 推广的 stream-map or zipWith Ex. Exercise 3.50
   y)
